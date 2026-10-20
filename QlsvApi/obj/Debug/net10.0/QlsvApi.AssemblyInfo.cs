@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QlsvApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e3c24babe90f163566b8d7b2fadb47d4c69bc6b7")]
 [assembly: System.Reflection.AssemblyProductAttribute("QlsvApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QlsvApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

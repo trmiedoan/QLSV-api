@@ -290,3 +290,4 @@ D:\ThienHoang-Roadmap\FE_Tic-Tac-Toe_react-handon\QLSV-api\QlsvApi\bin\Debug\net
 D:\ThienHoang-Roadmap\FE_Tic-Tac-Toe_react-handon\QLSV-api\QlsvApi\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.Scripting.resources.dll
 D:\ThienHoang-Roadmap\FE_Tic-Tac-Toe_react-handon\QLSV-api\QlsvApi\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
 D:\ThienHoang-Roadmap\FE_Tic-Tac-Toe_react-handon\QLSV-api\QlsvApi\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\ThienHoang-Roadmap\FE_Tic-Tac-Toe_react-handon\QLSV-api\QlsvApi\obj\Debug\net10.0\QlsvApi.sourcelink.json
