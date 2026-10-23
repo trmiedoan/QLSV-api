@@ -40,13 +40,14 @@ public class StudentsController : ControllerBase
         }
 
         // Thêm search & pagination, trả về danh sách và total page
-        var students = await _context.Students.Include(s => s.Major).ToListAsync();
+        // var students = await _context.Students.Include(s => s.Major).ToListAsync(); // gọi ToListAsync() quá sớm, chưa phân trang, dễ load cả triệu bản ghi xuống RAM
+        var students = _context.Students.AsNoTracking().Include(s => s.Major).AsQueryable(); // gọi ToListAsync() quá sớm, chưa phân trang, dễ load cả triệu bản ghi xuống RAM
         if (!string.IsNullOrWhiteSpace(search))
         {
-            students = students.Where(s => s.Name.Contains(search) || s.CardId.Contains(search)).ToList();
+            students = students.Where(s => s.Name.Contains(search) || s.CardId.Contains(search));
         }
 
-        var totalCount = students.Count;
+        var totalCount = await students.CountAsync();
         var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
 
         if (page > totalPages)
@@ -54,7 +55,7 @@ public class StudentsController : ControllerBase
             page = totalPages;
         }
         var skip = (page - 1) * pageSize; // bo qua cac dong nam o page truoc do
-        students = students.Skip(skip).Take(pageSize).ToList();
+        var result = await students.OrderBy(s => s.CardId).Skip(skip).Take(pageSize).ToListAsync();
 
         return new StudentListDto
         {
@@ -62,7 +63,7 @@ public class StudentsController : ControllerBase
             PageSize = pageSize,
             TotalPages = totalPages,
             TotalCount = totalCount,
-            Students = students.Select(s => s.ToStudentDto()).ToList()
+            Students = result.Select(s => s.ToStudentDto()).ToList()
         };
     }
 
@@ -71,7 +72,7 @@ public class StudentsController : ControllerBase
     public async Task<ActionResult<StudentDto>> GetStudentById(string cardId)
     {
         // var student = await _context.Students.FirstOrDefaultAsync(m => m.CardId == cardId); // → lúc trả về thì Major sẽ bị null vì chỉ lấy dữ liệu trong bảng Students
-        var student = await _context.Students.Include(s => s.Major).FirstOrDefaultAsync(m => m.CardId == cardId);
+        var student = await _context.Students.AsNoTracking().Include(s => s.Major).FirstOrDefaultAsync(m => m.CardId == cardId);
 
         if (student == null)
         {
@@ -122,6 +123,7 @@ public class StudentsController : ControllerBase
     public async Task<ActionResult<StudentDto>> UpdateStudent(string cardId, UpdateStudentDto student)
     {
         // check if student with the same cardId already exists 
+        // Change tracking: 
         var studentToUpdate = await _context.Students.FirstOrDefaultAsync(s => s.CardId == cardId);
         if (studentToUpdate == null)
         {
